@@ -7,10 +7,15 @@ response = requests.get(URL)
 soup = BeautifulSoup(response.content, 'html.parser')
 links = soup.find_all('a')
 
+flag = 0
 for i in links:
     if 'Scheme Data Download' in i.text:
         url = i['href']
-        response = requests.get(url)
-        print("Ok")
-    else:
-        print('Site has been modified')
+        requests.get(url)
+        flag = 1
+        break
+
+if flag == 0:
+    print("Error while scraping")
+else:
+    print("Scraped successfully!")
